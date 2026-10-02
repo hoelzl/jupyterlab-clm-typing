@@ -1,0 +1,54 @@
+# Publishes the VS Code extension as a GitHub release with the .vsix
+# attached. Run it from the Actions tab or `gh workflow run
+# release-vscode.yml` after the version bump in vscode/package.json has
+# landed on master. The tag is vscode-v<version>; the workflow refuses to
+# overwrite an existing release.
+name: Release VS Code extension
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vscode
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: vscode/package-lock.json
+      - run: npm ci
+      - name: Read version
+        id: version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=vscode-v$version" >> "$GITHUB_OUTPUT"
+      - name: Refuse an existing release
+        run: |
+          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "::error::Release ${{ steps.version.outputs.tag }} exists; bump the version in vscode/package.json first."
+            exit 1
+          fi
+      - run: npm run package
+      - name: Create the release
+        run: |
+          v='${{ steps.version.outputs.version }}'
+          gh release create '${{ steps.version.outputs.tag }}' "clm-typing-$v.vsix" \
+            --target "$GITHUB_SHA" \
+            --title "VS Code extension $v" \
+            --notes "Install: download clm-typing-$v.vsix, then run \`code --install-extension clm-typing-$v.vsix\`." \
+            --generate-notes

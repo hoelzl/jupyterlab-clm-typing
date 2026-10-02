@@ -773,13 +773,14 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.ts",
     "test:integration": "node build.mjs && node out/test/run.js",
-    "package": "npx @vscode/vsce package --no-dependencies",
+    "package": "vsce package --no-dependencies",
     "vscode:prepublish": "node build.mjs --production"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/vscode": "~1.90.0",
     "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.0.0",
     "esbuild": "^0.28.2",
     "typescript": "~5.8.0"
   }
