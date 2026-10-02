@@ -210,6 +210,9 @@ export function activate(context: vscode.ExtensionContext): void {
   const sessions = new Map<string, Session>();
   let armed: Session | null = null;
   let typeHook: vscode.Disposable | null = null;
+  // The context key outlives an extension-host restart; a stale `true` would
+  // route command-mode keys to commandModeKey with nothing armed.
+  void vscode.commands.executeCommand('setContext', 'clmTyping.armed', false);
 
   const status = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Left,
@@ -518,6 +521,36 @@ export function activate(context: vscode.ExtensionContext): void {
   // are bound to this while armed (see package.json), so they type the
   // script instead of editing the cell.
   command('clmTyping.hackerKey', () => hackerKey());
+
+  // While armed, printable keys pressed in notebook COMMAND mode (e.g. after
+  // a click on the armed cell's margin) are bound to this (see package.json,
+  // physical key codes so every layout is covered). VS Code reports no event
+  // when a cell drops to command mode, so without it `A` would insert a cell
+  // while Enter still typed the script. The key re-enters edit mode on the
+  // armed cell and types, like any other hacker key press.
+  command('clmTyping.commandModeKey', async () => {
+    const s = armed;
+    if (!s) {
+      void vscode.commands.executeCommand('setContext', 'clmTyping.armed', false);
+      return;
+    }
+    const nb = vscode.window.activeNotebookEditor;
+    const index = s.cell.index;
+    if (
+      !nb ||
+      nb.notebook !== s.cell.notebook ||
+      !nb.selections.some(r => r.start <= index && index < r.end)
+    ) {
+      // Another cell got selected faster than the selection event arrived:
+      // drop the key rather than type into a cell nobody is looking at.
+      disarm();
+      return;
+    }
+    await enterEditMode(nb, s.cell);
+    if (armed === s) {
+      hackerKey();
+    }
+  });
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration(e => {

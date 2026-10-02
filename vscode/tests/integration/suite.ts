@@ -202,6 +202,37 @@ const cases: Record<string, () => Promise<void>> = {
     assert.equal(text(cell), before, 'no longer armed');
   },
 
+  // Clicking into command mode on the armed cell leaves it armed (VS Code
+  // reports no event for it). Printable keys there are bound to
+  // commandModeKey, which must re-enter edit mode and type the script.
+  async 'hacker mode: a command-mode key re-enters edit mode and types'() {
+    await configure({ mode: 'hacker' });
+    const nb = await open('typing_py.ipynb');
+    const cell = await focusCell(nb, AREA);
+    await vscode.commands.executeCommand('clmTyping.reset');
+    const start = text(cell);
+    await vscode.commands.executeCommand('clmTyping.advance'); // arm
+    await vscode.commands.executeCommand('notebook.cell.quitEdit');
+    await sleep(200);
+    await vscode.commands.executeCommand('clmTyping.commandModeKey');
+    await waitFor('script typed', () => text(cell) !== start);
+    assert.ok(typingOf(cell).target.startsWith(text(cell).slice(0, 1)));
+    await assertEditMode(cell, 'after a command-mode key');
+    await vscode.commands.executeCommand('clmTyping.reset');
+  },
+
+  async 'command-mode key with nothing armed changes nothing'() {
+    const nb = await open('typing_py.ipynb');
+    await focusCell(nb, AREA);
+    await vscode.commands.executeCommand('clmTyping.reset');
+    await vscode.commands.executeCommand('clmTyping.disarm');
+    const before = nb.notebook.getCells().map(text);
+    await vscode.commands.executeCommand('clmTyping.commandModeKey');
+    await sleep(200);
+    assert.deepEqual(nb.notebook.getCells().map(text), before);
+    assert.equal(nb.notebook.cellCount, before.length);
+  },
+
   async 'CRLF documents (files.eol = \\r\\n)'() {
     await vscode.workspace
       .getConfiguration('files')

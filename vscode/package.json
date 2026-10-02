@@ -2,7 +2,7 @@
   "name": "clm-typing",
   "displayName": "CLM Typing Replay",
   "description": "Spike: replay code-along -> completed cell edits as simulated typing (CLM recording notebooks).",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "hoelzl",
   "license": "MIT",
   "private": true,
@@ -57,6 +57,11 @@
         "command": "clmTyping.hackerKey",
         "title": "Hacker key press",
         "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "title": "Hacker key press in command mode",
+        "category": "CLM Typing"
       }
     ],
     "menus": {
@@ -68,6 +73,10 @@
         {
           "command": "clmTyping.disarm",
           "when": "clmTyping.armed"
+        },
+        {
+          "command": "clmTyping.commandModeKey",
+          "when": "false"
         }
       ]
     },
@@ -206,6 +215,511 @@
         "command": "clmTyping.hackerKey",
         "key": "shift+delete",
         "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyA]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyA]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyB]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyB]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyC]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyC]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyD]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyD]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyE]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyE]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyF]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyF]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyG]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyG]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyH]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyH]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyI]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyI]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyJ]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyJ]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyK]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyK]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyL]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyL]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyM]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyM]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyN]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyN]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyO]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyO]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyP]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyP]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyQ]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyQ]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyR]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyR]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyS]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyS]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyT]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyT]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyU]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyU]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyV]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyV]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyW]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyW]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyX]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyX]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyY]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyY]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[KeyZ]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[KeyZ]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit0]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit0]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit1]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit1]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit2]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit2]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit3]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit3]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit4]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit4]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit5]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit5]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit6]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit6]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit7]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit7]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit8]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit8]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Digit9]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Digit9]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Minus]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Minus]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Equal]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Equal]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[BracketLeft]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[BracketLeft]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[BracketRight]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[BracketRight]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Backslash]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Backslash]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Semicolon]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Semicolon]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Quote]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Quote]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Backquote]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Backquote]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Comma]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Comma]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Period]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Period]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Slash]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Slash]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[IntlBackslash]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[IntlBackslash]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "[Space]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "shift+[Space]",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "enter",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "backspace",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
+      },
+      {
+        "command": "clmTyping.commandModeKey",
+        "key": "delete",
+        "when": "clmTyping.armed && notebookEditorFocused && !inputFocus"
       }
     ],
     "configuration": {
