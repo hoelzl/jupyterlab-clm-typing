@@ -1,0 +1,72 @@
+{
+  "title": "CLM Typing Replay",
+  "description": "Replays the code-along -> completed edit of a cell as simulated typing.",
+  "jupyter.lab.shortcuts": [
+    {
+      "command": "clm-typing:advance",
+      "keys": ["Alt N"],
+      "selector": "body"
+    },
+    {
+      "command": "clm-typing:finish",
+      "keys": ["Alt Shift N"],
+      "selector": "body"
+    },
+    {
+      "command": "clm-typing:undo-step",
+      "keys": ["Alt Shift U"],
+      "selector": "body"
+    },
+    {
+      "command": "clm-typing:reset",
+      "keys": ["Alt Shift R"],
+      "selector": "body"
+    },
+    {
+      "command": "clm-typing:toggle-mode",
+      "keys": ["Alt Shift M"],
+      "selector": "body"
+    }
+  ],
+  "properties": {
+    "mode": {
+      "title": "Mode",
+      "description": "'step': each advance types the next line by itself. 'hacker': advance arms the cell; then every key you press types the next few characters of the script (Esc disarms).",
+      "type": "string",
+      "enum": ["step", "hacker"],
+      "default": "step"
+    },
+    "charsPerSecond": {
+      "title": "Step mode: typing speed (characters per second)",
+      "type": "number",
+      "default": 22
+    },
+    "jitter": {
+      "title": "Step mode: random speed variation (0 = metronome, 0.6 = uneven)",
+      "type": "number",
+      "default": 0.6
+    },
+    "selectionPauseMs": {
+      "title": "Step mode: how long a selection is shown before it is deleted (ms)",
+      "type": "number",
+      "default": 450
+    },
+    "hackerMinChars": {
+      "title": "Hacker mode: minimum characters per key press",
+      "type": "integer",
+      "default": 1
+    },
+    "hackerMaxChars": {
+      "title": "Hacker mode: maximum characters per key press",
+      "type": "integer",
+      "default": 3
+    },
+    "showIndicator": {
+      "title": "Highlight the cell while hacker mode is armed",
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "additionalProperties": false,
+  "type": "object"
+}
