@@ -1,0 +1,272 @@
+{
+  "name": "clm-typing",
+  "displayName": "CLM Typing Replay",
+  "description": "Spike: replay code-along -> completed cell edits as simulated typing (CLM recording notebooks).",
+  "version": "0.1.1",
+  "publisher": "hoelzl",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoelzl/jupyterlab-clm-typing.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Notebooks",
+    "Education"
+  ],
+  "activationEvents": [
+    "onNotebook:jupyter-notebook"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "clmTyping.advance",
+        "title": "Advance (step) / arm or disarm (hacker)",
+        "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.finish",
+        "title": "Finish cell now",
+        "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.undoStep",
+        "title": "Undo last step",
+        "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.reset",
+        "title": "Reset cell to its start",
+        "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.toggleMode",
+        "title": "Toggle step/hacker mode",
+        "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.disarm",
+        "title": "Disarm hacker mode",
+        "category": "CLM Typing"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "title": "Hacker key press",
+        "category": "CLM Typing"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "clmTyping.hackerKey",
+          "when": "false"
+        },
+        {
+          "command": "clmTyping.disarm",
+          "when": "clmTyping.armed"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "clmTyping.advance",
+        "key": "alt+n",
+        "when": "notebookEditorFocused"
+      },
+      {
+        "command": "clmTyping.finish",
+        "key": "alt+shift+n",
+        "when": "notebookEditorFocused"
+      },
+      {
+        "command": "clmTyping.undoStep",
+        "key": "alt+shift+u",
+        "when": "notebookEditorFocused"
+      },
+      {
+        "command": "clmTyping.reset",
+        "key": "alt+shift+r",
+        "when": "notebookEditorFocused"
+      },
+      {
+        "command": "clmTyping.toggleMode",
+        "key": "alt+shift+m",
+        "when": "notebookEditorFocused"
+      },
+      {
+        "command": "clmTyping.disarm",
+        "key": "escape",
+        "when": "clmTyping.armed"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "enter",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "backspace",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "delete",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "tab",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+tab",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "left",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "right",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "up",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "down",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "home",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "end",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "pageup",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "pagedown",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+left",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+right",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+up",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+down",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+home",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+end",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+backspace",
+        "when": "clmTyping.armed && editorTextFocus"
+      },
+      {
+        "command": "clmTyping.hackerKey",
+        "key": "shift+delete",
+        "when": "clmTyping.armed && editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "CLM Typing Replay",
+      "properties": {
+        "clmTyping.mode": {
+          "type": "string",
+          "enum": [
+            "step",
+            "hacker"
+          ],
+          "default": "step",
+          "description": "'step': each advance (Alt+N) types the next line by itself. 'hacker': advance arms the cell; then every key you press types the next few characters of the script (Esc disarms)."
+        },
+        "clmTyping.charsPerSecond": {
+          "type": "number",
+          "default": 22,
+          "description": "Step mode: typing speed (characters per second)."
+        },
+        "clmTyping.jitter": {
+          "type": "number",
+          "default": 0.6,
+          "description": "Step mode: random speed variation (0 = metronome, 0.6 = uneven)."
+        },
+        "clmTyping.selectionPauseMs": {
+          "type": "number",
+          "default": 450,
+          "description": "Step mode: how long a selection is shown before it is deleted (ms)."
+        },
+        "clmTyping.hackerMinChars": {
+          "type": "integer",
+          "default": 1,
+          "description": "Hacker mode: minimum characters per key press."
+        },
+        "clmTyping.hackerMaxChars": {
+          "type": "integer",
+          "default": 3,
+          "description": "Hacker mode: maximum characters per key press."
+        },
+        "clmTyping.showIndicator": {
+          "type": "boolean",
+          "default": true,
+          "description": "Highlight the cell and show a status bar item while hacker mode is armed."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.ts",
+    "test:integration": "node build.mjs && node out/test/run.js",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "vscode:prepublish": "node build.mjs --production"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "~1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "esbuild": "^0.28.2",
+    "typescript": "~5.8.0"
+  }
+}

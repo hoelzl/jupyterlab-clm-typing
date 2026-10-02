@@ -35,4 +35,4 @@ exclude = ["jupyterlab_clm_typing/labextension"]
 
 [tool.hatch.build.targets.sdist]
 artifacts = ["jupyterlab_clm_typing/labextension"]
-exclude = ["node_modules", "lib", "examples"]
+exclude = ["node_modules", "lib", "examples", "vscode"]

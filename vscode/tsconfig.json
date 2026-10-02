@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "es2022",
+    "lib": ["es2022"],
+    "types": ["node", "vscode"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/*.ts", "tests/**/*.ts", "../src/planner.ts", "../src/player.ts"]
+}
