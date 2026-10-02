@@ -1,4 +1,14 @@
-# jupyterlab-clm-typing (spike)
+# jupyterlab-clm-typing
+
+## Install
+
+```bash
+pip install git+https://github.com/hoelzl/jupyterlab-clm-typing
+```
+
+The frontend is prebuilt and committed (`jupyterlab_clm_typing/labextension/`),
+so installing needs no Node. Works in JupyterLab 4 and Notebook 7, including the
+RISE slideshow. In a Dockerfile, add that line after JupyterLab is installed.
 
 Replays the edit from a CLM code-along cell to its completed version as
 simulated typing, for recording videos. The target text comes from cell metadata
@@ -43,16 +53,43 @@ CodeMirror `cpp` language mode:
 - In the RISE slideshow (iframe app), the extension loaded and step mode with
   flush and finish worked.
 
-Not yet tested: a live `xcpp17` kernel in the Docker image (Docker Desktop was
-down). Typing doesn't depend on the kernel, but the extension still has to be
-installed into the image.
+### Live C++ kernel (2026-10-02, `cam-notebook:0.5.2-cpp`, Notebook 7.6 / JupyterLab 4.6.1, xcpp20)
+
+The wheel was pip-installed into the running container, and the extension
+loaded on page reload, with no server restart. Two real decks from CppCourses
+(`C++ Einsteiger-de`, "07 Member Functions" and "09 Structs und Klassen") were
+turned into typing notebooks with `scripts/merge_typing.py` (a stand-in for clm
+#1023).
+
+- Every cell was typed and then run in order in the live kernel, with no
+  compile errors. This included the struct→class rewrite of `MyComplex` in 22
+  animated steps (step mode) and the `c.re = 3` → `c.set_re(3)` in-place edits.
+- In hacker mode, about 100 real key presses typed exactly `p1.distance(p2)`.
+  The real Shift+Enter disarmed the cell and ran it.
+- The deck's first cell is a `start`/`completed` pair (`struct Point` gains
+  `distance`). Running it without typing it leaves later cells failing to
+  compile, so a recording has to type it. That's the deck's logic, not a replay
+  defect.
+- `merge_typing.py` pairs cells by output cell id. clm's output ids appear to be
+  positional (that start/completed pair shares one id across code-along and
+  completed), so the stand-in can mis-pair decks where pairs shift positions.
+  clm #1023 pairs by source tags instead.
 
 ## Develop
+
+A plan preview for a notebook's typing cells: `node scripts/show_plan.ts NB.ipynb`.
+To build a typing notebook from clm outputs before clm #1023 lands:
+`python scripts/merge_typing.py CODE_ALONG.ipynb COMPLETED.ipynb -o OUT.ipynb`
+(`--scan <Code-Along dir>` ranks decks by typing cells).
+
+After changing `src/`, run `npm run build` and **commit
+`jupyterlab_clm_typing/labextension/`**; it's what pip installs.
 
 ```bash
 npm install
 npm test                                   # planner + player unit tests (node --test)
 npm run build                              # tsc + jupyter labextension build (needs jupyter on PATH)
-python scripts/dev_install.py <env-python> # copy the prebuilt extension into an env
+python scripts/dev_install.py <env-python> # copy the prebuilt extension into an env (dev)
+uv build --wheel                           # wheel in dist/
 python scripts/make_examples.py            # regenerate examples/*.ipynb
 ```

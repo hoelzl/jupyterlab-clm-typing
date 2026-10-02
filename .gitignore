@@ -1,5 +1,5 @@
 node_modules/
 lib/
-jupyterlab_clm_typing/labextension/
 *.tsbuildinfo
 __pycache__/
+dist/

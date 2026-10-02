@@ -1,0 +1,50 @@
+{
+  "name": "jupyterlab-clm-typing",
+  "version": "0.1.0",
+  "description": "Spike: replay code-along -> completed cell edits as simulated typing (CLM recording notebooks).",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*.js",
+    "schema/*.json",
+    "style/*.css",
+    "style/index.js"
+  ],
+  "scripts": {
+    "build": "tsc && jupyter labextension build .",
+    "build:lib": "tsc",
+    "test": "node --test tests/planner.test.ts tests/player.test.ts"
+  },
+  "dependencies": {
+    "@codemirror/state": "^6.2.0",
+    "@codemirror/view": "^6.9.6",
+    "@jupyterlab/application": "^4.5.0",
+    "@jupyterlab/apputils": "^4.5.0",
+    "@jupyterlab/cells": "^4.5.0",
+    "@jupyterlab/codemirror": "^4.5.0",
+    "@jupyterlab/notebook": "^4.5.0",
+    "@jupyterlab/settingregistry": "^4.5.0"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^4.5.0",
+    "typescript": "~5.8.0"
+  },
+  "sideEffects": [
+    "style/*.css",
+    "style/index.js"
+  ],
+  "styleModule": "style/index.js",
+  "jupyterlab": {
+    "extension": true,
+    "outputDir": "jupyterlab_clm_typing/labextension",
+    "schemaDir": "schema",
+    "_build": {
+      "load": "static\\remoteEntry.89f34531f6fd9db37f3d.js",
+      "extension": "./extension",
+      "style": "./style"
+    }
+  }
+}

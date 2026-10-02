@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling>=1.5.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jupyterlab-clm-typing"
+version = "0.1.0"
+description = "JupyterLab extension: replay code-along -> completed notebook cells as simulated typing for video recordings"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+classifiers = [
+    "Framework :: Jupyter",
+    "Framework :: Jupyter :: JupyterLab",
+    "Framework :: Jupyter :: JupyterLab :: 4",
+    "Framework :: Jupyter :: JupyterLab :: Extensions",
+    "Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = ["jupyterlab>=4.1,<5"]
+
+[project.urls]
+Homepage = "https://github.com/hoelzl/jupyterlab-clm-typing"
+
+# The labextension is prebuilt (`npm run build`) and COMMITTED, so
+# `pip install git+https://github.com/hoelzl/jupyterlab-clm-typing` works
+# without node. Rebuild and commit it after every change to src/.
+[tool.hatch.build.targets.wheel]
+packages = ["jupyterlab_clm_typing"]
+exclude = ["jupyterlab_clm_typing/labextension"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"jupyterlab_clm_typing/labextension" = "share/jupyter/labextensions/jupyterlab-clm-typing"
+"install.json" = "share/jupyter/labextensions/jupyterlab-clm-typing/install.json"
+
+[tool.hatch.build.targets.sdist]
+artifacts = ["jupyterlab_clm_typing/labextension"]
+exclude = ["node_modules", "lib", "examples"]
