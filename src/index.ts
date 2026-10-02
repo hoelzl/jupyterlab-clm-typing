@@ -24,7 +24,7 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import type { EditorView } from '@codemirror/view';
 
 import { makePlan } from './planner.ts';
-import { Player, type EditorPort } from './player.ts';
+import { isRunCellChord, Player, type EditorPort } from './player.ts';
 
 const PLUGIN_ID = 'jupyterlab-clm-typing:plugin';
 const ARMED_CLASS = 'clm-typing-armed';
@@ -117,6 +117,7 @@ interface Session {
 }
 
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
 
 const plugin: JupyterFrontEndPlugin<void> = {
   id: PLUGIN_ID,
@@ -248,16 +249,20 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     // Hacker mode: while a cell is armed, every plain key press types the
     // next few characters of the script. Modifier chords pass through (so
-    // Alt+N disarms, Ctrl+S saves); Esc and Shift+Enter disarm.
+    // Alt+N disarms, Ctrl+S saves); Esc disarms. Every run-cell chord
+    // (Shift/Ctrl/Alt/Cmd+Enter) disarms and still reaches JupyterLab.
     const onKeydown = (event: KeyboardEvent) => {
-      if (!armed || event.ctrlKey || event.altKey || event.metaKey) {
+      if (!armed) {
+        return;
+      }
+      if (isRunCellChord(event)) {
+        disarm(); // let JupyterLab run the cell
+        return;
+      }
+      if (event.ctrlKey || event.altKey || event.metaKey) {
         return;
       }
       if (['Shift', 'Control', 'Alt', 'Meta', 'CapsLock'].includes(event.key)) {
-        return;
-      }
-      if (event.key === 'Enter' && event.shiftKey) {
-        disarm(); // let JupyterLab run the cell
         return;
       }
       event.preventDefault();

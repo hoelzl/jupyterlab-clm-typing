@@ -151,3 +151,17 @@ export class Player {
     return ks;
   }
 }
+
+/** Enter with any modifier runs the cell in Jupyter (Shift/Ctrl/Alt/Cmd). */
+export function isRunCellChord(event: {
+  key: string;
+  shiftKey: boolean;
+  ctrlKey: boolean;
+  altKey: boolean;
+  metaKey: boolean;
+}): boolean {
+  return (
+    event.key === 'Enter' &&
+    (event.shiftKey || event.ctrlKey || event.altKey || event.metaKey)
+  );
+}

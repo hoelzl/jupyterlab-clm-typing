@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { makePlan } from '../src/planner.ts';
-import { Player, type EditorPort } from '../src/player.ts';
+import { isRunCellChord, Player, type EditorPort } from '../src/player.ts';
 
 class FakeEditor implements EditorPort {
   text: string;
@@ -73,4 +73,15 @@ test('finishAll recovers from manual edits', () => {
   ed.text = 'garbage';
   player.finishAll();
   assert.equal(ed.text, TARGET);
+});
+
+test('every run-cell chord counts (Shift/Ctrl/Alt/Cmd+Enter), plain Enter does not', () => {
+  const ev = (mods: Partial<Record<'shiftKey' | 'ctrlKey' | 'altKey' | 'metaKey', boolean>>, key = 'Enter') => ({
+    key, shiftKey: false, ctrlKey: false, altKey: false, metaKey: false, ...mods
+  });
+  for (const m of ['shiftKey', 'ctrlKey', 'altKey', 'metaKey'] as const) {
+    assert.ok(isRunCellChord(ev({ [m]: true })), m);
+  }
+  assert.equal(isRunCellChord(ev({})), false);
+  assert.equal(isRunCellChord(ev({ ctrlKey: true }, 's')), false);
 });

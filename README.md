@@ -33,7 +33,8 @@ emit for **recording** notebooks only.
     mid-line finishes the line at once.
   - **hacker**: `Alt+N` arms the cell. Each plain key press then types the next
     1–3 script characters. The keys pressed never reach the cell, even after the
-    script ends. `Shift+Enter` (run), `Esc` or `Alt+N` disarms it.
+    script ends. Any run-cell chord (`Shift+Enter`, `Ctrl+Enter`, `Alt+Enter`)
+    disarms it and still runs the cell; `Esc` or `Alt+N` disarms it without running.
 - `Alt+Shift+N` finishes the cell, `Alt+Shift+U` undoes a step,
   `Alt+Shift+R` resets the cell, `Alt+Shift+M` toggles the mode. Speeds and other
   options are in Settings → CLM Typing Replay.
