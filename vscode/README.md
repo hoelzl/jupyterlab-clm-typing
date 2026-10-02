@@ -14,8 +14,8 @@ Only the editor side is VS Code specific.
 ```bash
 cd vscode
 npm install
-npm run package                     # -> clm-typing-0.1.1.vsix
-code --install-extension clm-typing-0.1.1.vsix
+npm run package                     # -> clm-typing-0.1.2.vsix
+code --install-extension clm-typing-0.1.2.vsix
 ```
 
 For development, open `vscode/` in VS Code and press F5 (or run
@@ -56,6 +56,13 @@ defaults as the JupyterLab extension.
   It uses `showTextDocument` on the cell: the active text editor cannot tell the modes
   apart, and `notebook.cell.edit` toggles out of edit mode on a cell already editing.
   Selecting another cell disarms.
+- **Command mode on the armed cell** (e.g. after clicking its margin) cannot be
+  detected, so while armed every printable key in command mode (bound by physical key
+  code, plain and with Shift, plus Enter, Backspace and Delete) re-enters edit mode on
+  the armed cell and types the script. Single-key notebook shortcuts (`A`, `B`, `M`,
+  `D D`, ...) therefore need a disarm first (Esc or `Alt+N`). Ctrl/Alt/Cmd chords,
+  Shift+Enter and the arrow keys (which select another cell and so disarm) are left
+  alone.
 
 ## Tests
 
