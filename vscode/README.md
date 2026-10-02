@@ -11,15 +11,33 @@ Only the editor side is VS Code specific.
 
 ## Install
 
+Download `clm-typing-<version>.vsix` from the
+[latest `vscode-v*` release](https://github.com/hoelzl/jupyterlab-clm-typing/releases)
+and run:
+
+```bash
+code --install-extension clm-typing-<version>.vsix
+```
+
+To build it yourself:
+
 ```bash
 cd vscode
 npm install
-npm run package                     # -> clm-typing-0.1.2.vsix
-code --install-extension clm-typing-0.1.2.vsix
+npm run package                     # -> clm-typing-<version>.vsix
 ```
 
 For development, open `vscode/` in VS Code and press F5 (or run
 `code --extensionDevelopmentPath=<path-to>/vscode ../examples/typing_py.ipynb`).
+
+## Release
+
+1. Bump `version` in `vscode/package.json` (`npm version patch --no-git-tag-version`
+   in `vscode/` updates the lock file too) and merge that to `master`.
+2. Run the *Release VS Code extension* workflow (`gh workflow run release-vscode.yml`,
+   or the Actions tab). It runs the full CI, builds the `.vsix` and creates the GitHub
+   release `vscode-v<version>` with the `.vsix` attached and notes generated from the
+   merged PRs. It refuses to overwrite an existing release.
 
 ## Use
 
@@ -71,6 +89,9 @@ npm test                  # pure helpers (node --test)
 npm run typecheck
 npm run test:integration  # downloads VS Code into .vscode-test/ and runs tests/integration/suite.ts
 ```
+
+CI (`.github/workflows/ci.yml`) runs all of these on every push and PR, the
+integration suite under `xvfb` on Linux.
 
 The integration suite opens `../examples/typing_py.ipynb` in a real VS Code, steps
 both cells in step mode (including undo, finish and reset), types a whole cell in
