@@ -15,6 +15,11 @@ simulated typing, for recording videos. The target text comes from cell metadata
 (`metadata.clm.typing.target`, optional `.start` for reset), which CLM would
 emit for **recording** notebooks only.
 
+## VS Code
+
+`vscode/` holds a VS Code player that shares `src/planner.ts` and `src/player.ts`
+with this extension and reads the same cell metadata. See `vscode/README.md`.
+
 ## How it works
 
 - **No synthetic key events.** Edits go into the cell's CodeMirror 6 view as
