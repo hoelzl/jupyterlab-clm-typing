@@ -255,6 +255,37 @@ export function activate(context: vscode.ExtensionContext): void {
     return false;
   }
 
+  /**
+   * Always put the cell into edit mode, so the keys that follow reach its
+   * editor and not notebook command mode (where `A` inserts a cell).
+   *
+   * The active text editor cannot tell the modes apart: it keeps pointing at
+   * the cell's editor in command mode. `notebook.cell.edit` is no fix either:
+   * it toggles out of edit mode when the cell is already editing.
+   * `showTextDocument` on the cell document focuses its editor in both
+   * modes, and passing the current selection keeps the cursor where it was.
+   */
+  async function enterEditMode(
+    nb: vscode.NotebookEditor,
+    cell: vscode.NotebookCell
+  ): Promise<void> {
+    const current = vscode.window.visibleTextEditors.find(
+      e => e.document === cell.document
+    );
+    try {
+      await vscode.window.showTextDocument(cell.document, {
+        viewColumn: nb.viewColumn,
+        selection: current?.selection,
+        preserveFocus: false
+      });
+    } catch (err) {
+      log.appendLine(`cell ${cell.index}: showTextDocument failed: ${String(err)}`);
+    }
+    if (!(await waitForEditor(cell.document))) {
+      log.appendLine(`cell ${cell.index}: no editor; typing without one`);
+    }
+  }
+
   /** Session for the active cell, created on first use. */
   async function activeSession(): Promise<Session | null> {
     const nb = vscode.window.activeNotebookEditor;
@@ -282,13 +313,7 @@ export function activate(context: vscode.ExtensionContext): void {
       flash('no typing plan in this cell');
       return null;
     }
-    if (vscode.window.activeTextEditor?.document !== cell.document) {
-      // Enter edit mode so the cell has an editor to show selections in.
-      await vscode.commands.executeCommand('notebook.cell.edit');
-      if (!(await waitForEditor(cell.document))) {
-        log.appendLine(`cell ${cell.index}: no editor; typing without one`);
-      }
-    }
+    await enterEditMode(nb, cell);
     const existing = sessions.get(cell.document.uri.toString());
     if (existing) {
       if (!existing.animation) {
@@ -509,6 +534,17 @@ export function activate(context: vscode.ExtensionContext): void {
     // the presenter is not looking at.
     vscode.window.onDidChangeActiveTextEditor(e => {
       if (armed && e?.document !== armed.cell.document) {
+        disarm();
+      }
+    }),
+    // Selecting another cell disarms too. Shift+Enter selects the next cell
+    // in command mode, which the active text editor does not reflect.
+    vscode.window.onDidChangeNotebookEditorSelection(e => {
+      if (
+        armed &&
+        e.notebookEditor.notebook === armed.cell.notebook &&
+        !e.selections.some(r => r.start <= armed!.cell.index && armed!.cell.index < r.end)
+      ) {
         disarm();
       }
     }),

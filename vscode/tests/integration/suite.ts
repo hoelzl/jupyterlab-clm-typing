@@ -62,6 +62,29 @@ async function stepThrough(cell: vscode.NotebookCell): Promise<string[]> {
   return seen;
 }
 
+/**
+ * Command mode on `cell` while the active text editor still points at its
+ * editor (VS Code keeps it there after Esc, and after Shift+Enter moves the
+ * selection to an already-edited cell). The old "already editing?" check
+ * read exactly this stale state.
+ */
+async function toCommandModeOn(nb: vscode.NotebookEditor, cell: vscode.NotebookCell): Promise<void> {
+  await focusCell(nb, cell.index);
+  await vscode.commands.executeCommand('notebook.cell.quitEdit');
+  await sleep(200);
+  assert.equal(vscode.window.activeTextEditor?.document, cell.document, 'stale active editor');
+}
+
+/** Edit mode is only observable by typing: in command mode `type` is lost. */
+async function assertEditMode(cell: vscode.NotebookCell, when: string): Promise<void> {
+  const before = text(cell);
+  await vscode.commands.executeCommand('default:type', { text: '#' });
+  await sleep(200);
+  assert.notEqual(text(cell), before, `cell is in edit mode ${when}`);
+  await vscode.commands.executeCommand('deleteLeft');
+  await waitFor('typed # removed', () => text(cell) === before);
+}
+
 const cases: Record<string, () => Promise<void>> = {
   async 'step mode types an empty cell line by line'() {
     await configure({ mode: 'step', charsPerSecond: 2000, jitter: 0, selectionPauseMs: 1 });
@@ -132,6 +155,51 @@ const cases: Record<string, () => Promise<void>> = {
     await vscode.commands.executeCommand('type', { text: 'q' });
     await waitFor('q typed into the other cell', () => text(other).endsWith('q'));
     assert.equal(text(cell), afterOne, 'armed cell untouched');
+  },
+
+  // Regression: with a cell selected in COMMAND mode (blue bar, no cursor),
+  // Alt+N used to skip entering edit mode, so the following keys went to
+  // notebook commands (`A` inserted a cell).
+  async 'advance enters edit mode from command mode (step)'() {
+    await configure({ mode: 'step' });
+    const nb = await open('typing_py.ipynb');
+    const cell = await focusCell(nb, AREA);
+    await vscode.commands.executeCommand('clmTyping.reset');
+    await toCommandModeOn(nb, cell);
+    await vscode.commands.executeCommand('clmTyping.advance');
+    await assertEditMode(cell, 'after advance from command mode');
+    // Advancing again while already editing must not leave edit mode
+    // (`notebook.cell.edit` toggles; that is why it is not used).
+    await vscode.commands.executeCommand('clmTyping.advance');
+    await assertEditMode(cell, 'after advance while editing');
+    await vscode.commands.executeCommand('clmTyping.reset');
+  },
+
+  async 'advance enters edit mode from command mode (hacker)'() {
+    await configure({ mode: 'hacker' });
+    const nb = await open('typing_py.ipynb');
+    const cell = await focusCell(nb, AREA);
+    await vscode.commands.executeCommand('clmTyping.reset');
+    await toCommandModeOn(nb, cell);
+    await vscode.commands.executeCommand('clmTyping.advance'); // arm
+    await vscode.commands.executeCommand('clmTyping.disarm');
+    await assertEditMode(cell, 'after arming from command mode');
+    await vscode.commands.executeCommand('clmTyping.reset');
+  },
+
+  async 'hacker mode: selecting another cell disarms'() {
+    await configure({ mode: 'hacker' });
+    const nb = await open('typing_py.ipynb');
+    const cell = await focusCell(nb, AREA);
+    await vscode.commands.executeCommand('clmTyping.reset');
+    await vscode.commands.executeCommand('clmTyping.advance'); // arm
+    await vscode.commands.executeCommand('notebook.cell.quitEdit');
+    nb.selection = new vscode.NotebookRange(FIZZBUZZ, FIZZBUZZ + 1);
+    await sleep(200);
+    const before = text(cell);
+    await vscode.commands.executeCommand('clmTyping.hackerKey');
+    await sleep(200);
+    assert.equal(text(cell), before, 'no longer armed');
   },
 
   async 'CRLF documents (files.eol = \\r\\n)'() {
