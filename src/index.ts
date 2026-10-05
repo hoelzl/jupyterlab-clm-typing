@@ -47,7 +47,7 @@ const DEFAULTS: Config = {
   jitter: 0.6,
   selectionPauseMs: 450,
   hackerMinChars: 1,
-  hackerMaxChars: 3,
+  hackerMaxChars: 1,
   showIndicator: true
 };
 
