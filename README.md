@@ -37,7 +37,8 @@ with this extension and reads the same cell metadata. See `vscode/README.md`.
   - **step**: `Alt+N` types the next line at a jittered speed. Pressing it again
     mid-line finishes the line at once.
   - **hacker**: `Alt+N` arms the cell. Each plain key press then types the next
-    1–3 script characters. The keys pressed never reach the cell, even after the
+    script character (or a random 1–N burst: set *Hacker mode: maximum
+    characters per key press*). The keys pressed never reach the cell, even after the
     script ends. Any run-cell chord (`Shift+Enter`, `Ctrl+Enter`, `Alt+Enter`)
     disarms it and still runs the cell; `Esc` or `Alt+N` disarms it without running.
 - `Alt+Shift+N` finishes the cell, `Alt+Shift+U` undoes a step,

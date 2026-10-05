@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-clm-typing",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Spike: replay code-along -> completed cell edits as simulated typing (CLM recording notebooks).",
   "license": "MIT",
   "private": true,
@@ -42,7 +42,7 @@
     "outputDir": "jupyterlab_clm_typing/labextension",
     "schemaDir": "schema",
     "_build": {
-      "load": "static\\remoteEntry.6c4314e2f4aa5491c8f4.js",
+      "load": "static\\remoteEntry.0e05bfef932dba8b1947.js",
       "extension": "./extension",
       "style": "./style"
     }

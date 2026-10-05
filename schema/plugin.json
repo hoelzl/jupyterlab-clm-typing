@@ -59,7 +59,7 @@
     "hackerMaxChars": {
       "title": "Hacker mode: maximum characters per key press",
       "type": "integer",
-      "default": 3
+      "default": 1
     },
     "showIndicator": {
       "title": "Highlight the cell while hacker mode is armed",
